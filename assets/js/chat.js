@@ -1,7 +1,7 @@
 $(function(){
 
 	var host = location.port ? window.location.hostname +":"+ location.port : window.location.hostname
-	
+	console.log(host);
 	var server = io.connect(host);
 
 	server.on("connect", function(data){
