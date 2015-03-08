@@ -1,0 +1,71 @@
+html,body {
+	height: 100%;
+	padding: 5px;
+	margin: 0;
+}
+
+#container {
+	width: 100%;
+	height: 96%;
+	border: 2px solid #666;
+	border-radius: 20px;
+	position: relative;
+	overflow: hidden;
+}
+
+#users {
+	width: 16%;
+	height: 100%;
+	background: #ECEBEB;
+	position: absolute;
+}
+
+#inputMessage {
+	width: 84%;
+	height: 40px;
+	position: absolute;
+	bottom: 0;
+	left: 16%
+}
+
+#chat { 
+	width: 84%;
+	height: 90%;
+	position: absolute;
+	top: 0;
+	left: 16%;
+	overflow: scroll;
+}
+
+ul{
+	list-style: none;
+}
+
+li {
+	line-height: 20px;
+}
+
+#inputMessage input {
+	width: 90%;
+	height: 90%;
+	outline: none;
+	border: 2px solid #999;
+	padding: 2px;
+	font-size: 16px;
+}
+
+button[type=submit] {
+	background: #ccc;
+	padding: 12px 20px 16px;
+	border: none;
+	color: white;
+	font-size: 14px;
+	width: 9.3%;
+	outline: none;
+	position: absolute;
+	right: 0
+}
+
+button[type=submit]:active {
+	background: #bbb;
+};
