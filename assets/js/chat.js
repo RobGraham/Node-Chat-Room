@@ -1,5 +1,8 @@
 $(function(){
-	var server = io.connect("http://localhost:1337");
+
+	var host = location.port ? window.location.hostname +":"+ location.port : window.location.hostname
+	
+	var server = io.connect(host);
 
 	server.on("connect", function(data){
 		var nickname = null;
