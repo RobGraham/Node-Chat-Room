@@ -12,8 +12,14 @@ io.on('connection', function(client){
 	console.log("Client connected!");
 
 	client.on("join", function(name){
+		
 		client.nickname = name;
-		io.emit("userJoined", name);
+
+		var connectedUsers = io.sockets.sockets.map(function(client) {
+			return { name: client.nickname, client_id: client.id };
+		});
+
+		io.emit("userConnected", { name: client.nickname, client_id: client.id, connected_users: connectedUsers });
 	});
 
 	client.on("message", function(message){
@@ -22,8 +28,8 @@ io.on('connection', function(client){
 	});
 
 	client.on("disconnect", function(){
-
-	})
+		io.emit("userDisconnected", {name: client.nickname, client_id: client.id});
+	});
 });
 
 

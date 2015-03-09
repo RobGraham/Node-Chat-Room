@@ -1,8 +1,9 @@
 $(function(){
 
-	var host = location.port ? window.location.hostname +":"+ location.port : window.location.hostname
-	console.log(host);
-	var server = io.connect(host);
+	var host = location.port ? window.location.hostname +":"+ location.port : window.location.hostname,
+		server = io.connect(host),
+		userList = $("#users ul"),
+		chatBox = $("#chat ul");
 
 	server.on("connect", function(data){
 		var nickname = null;
@@ -11,10 +12,9 @@ $(function(){
 			nickname = prompt("What is your name?");
 			server.emit("join", nickname);
 		};		
-
 		server.on("message", insertMessage);
-
-		server.on("userJoined", addUser);
+		server.on("userConnected", userConnected);
+		server.on("userDisconnected", userDisconnected);
 	})
 
 	
@@ -26,11 +26,24 @@ $(function(){
 	})
 
 	function insertMessage(msg){
-		$("#chat ul").append("<li>" + msg + "</li>");
+		chatBox.append("<li>" + msg + "</li>");
 	}
 
-	function addUser(name){
-		insertMessage(name + " has joined the chat room")
-		$("#users ul").append("<li>" + name + "<li>");
+	function userConnected(data){
+		insertMessage(data.name + " has joined the chat room");
+		updateUserList(data.connected_users);
+	}
+
+	function userDisconnected(data){
+		insertMessage(data.name + " has left the chat room");
+		userList.find("li[data-client-id='" + data.client_id + "']");
+	}
+
+	function updateUserList(users){
+		var userArr = users.map(function(user){
+			return "<li data-client-id=" + user.client_id + ">" + user.name + "</li>";
+		}).join("");
+
+		userList.html(userArr);
 	}
 });
