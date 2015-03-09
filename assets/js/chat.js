@@ -39,7 +39,7 @@ $(function(){
 
 	function userDisconnected(data){
 		insertMessage(data.name + " has left the chat room");
-		userList.find("li[data-client-id='" + data.client_id + "']");
+		userList.find("li[data-client-id=" + data.client_id + "]").remove();
 	}
 
 	function updateUserList(users){
