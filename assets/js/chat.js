@@ -3,7 +3,8 @@ $(function(){
 	var host = location.port ? window.location.hostname +":"+ location.port : window.location.hostname,
 		server = io.connect(host),
 		userList = $("#users ul"),
-		chatBox = $("#chat ul");
+		chatBox = $("#chat"),
+		chatBoxUL = chatBox.find("ul");
 
 	server.on("connect", function(data){
 		var nickname = null;
@@ -26,7 +27,9 @@ $(function(){
 	})
 
 	function insertMessage(msg){
-		chatBox.append("<li>" + msg + "</li>");
+		chatBoxUL.append("<li>" + msg + "</li>");
+
+		chatBox[0].scrollTop = chatBox[0].scrollHeight;
 	}
 
 	function userConnected(data){
