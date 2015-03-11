@@ -1,9 +1,9 @@
 $(function(){
 
-	var host = location.port ? window.location.hostname +":"+ location.port : window.location.hostname,
-		server = io.connect(host),
-		userList = $("#users ul"),
-		chatBox = $("#chat"),
+	var host 	  = location.port ? window.location.hostname +":"+ location.port : window.location.hostname,
+		server 	  = io.connect(host),
+		userList  = $("#users ul"),
+		chatBox   = $("#chat"),
 		chatBoxUL = chatBox.find("ul");
 
 	server.on("connect", function(data){
@@ -22,8 +22,15 @@ $(function(){
 
 	$("#inputMessage").submit(function(e){
 		e.preventDefault();
-		server.emit("message", $("input[name=msgInput]").val());
-		$(this)[0].reset();
+
+		msg = $("input[name=msgInput]").val();
+
+		if(msg.trim() !== ""){
+			server.emit("message", msg);
+			$(this)[0].reset();
+		} else {
+			return;
+		}
 	})
 
 	function insertMessage(msg){

@@ -2,7 +2,8 @@ var express = require('express'),
 	app 	= express(),
 	server 	= require('http').createServer(app),
 	io 		= require('socket.io')(server),
-	port 	= process.env.PORT || 5000;
+	port 	= process.env.PORT || 5000,
+	linkify = require('html-linkify');
 
 // Assets
 app.use(express.static(__dirname + '/'));
@@ -23,7 +24,8 @@ io.on('connection', function(client){
 	});
 
 	client.on("message", function(message){
-		message = client.nickname + ": " + message;
+		// Format message with prepended user and create links if found
+		message = linkify((client.nickname + ": " + message));
 		io.emit("message", message);
 	});
 
@@ -36,7 +38,5 @@ io.on('connection', function(client){
 app.get("/", function(req, resp) {
 	resp.sendFile(__dirname + "/index.html");
 });
-
-
 
 server.listen(port);
